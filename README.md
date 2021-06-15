@@ -9,7 +9,7 @@ Basylic is a SaaS solution that allows you to perform automatic extraction of in
 
 This module is available on PyPI, so you can install it with with `pip`:
 
-```>>> pip install basylic```
+```pip install basylic```
 
 Alternatively, you can access the source code on GitHub:
 
@@ -42,11 +42,37 @@ Possible values for `document_type` are: `'french_ids'`, `'rib'`, `'ri'`, `'avis
 With those arguments specified, `check_document` returns a comprehensive JSON document with document compliance check and OCR transcription, among other information.
 
 3. It is recommended to include data about applicants. Data extracted by Basylic's OCR will be crosschecked with those data.
->>> applicant_information = {"applicant_0": {"name": "BERTHIER"}}
->>> basylic.check_document(file_path="corinne-berthier-recto-verso.odf", document_type="french_ids")
+```applicants_information = {"applicant_0": {"identity": "BERTHIER CORINNE"}}
+basylic_result = basylic.check_document(
+    file_path="corinne-berthier-recto-verso.pdf", 
+    document_type="french_ids", applicants_information=applicants_information
+print(basylic_result)
+)
+```
 
 4. Various arguments could be passed as kwargs. For example:
-a. `save_report=True` will save the result of your request to your user space on Basylic's Portal.
-b. `with_image=True` will return a base64 image for each recognised document. This is handy if you wish to print the input image for comparison.
-c. `reference='abc...'` will add this key-value pair to the API output. If this key is specified, the report will appear under this name in Basylic's Portal.
+* a. `save_report=True` will save the result of your request to your user space on Basylic's Portal.
+* b. `with_image=True` will return a base64 image for each recognised document. This is handy if you wish to print the input image for comparison.
+* c. `reference='abc...'` will add this key-value pair to the API output. If this key is specified, the report will appear under this name in Basylic's Portal.
+
+For example, this code: 
+
+```
+applicants_information = {"applicant_0": {"identity": "BERTHIER CORINNE"}}
+basylic_result = basylic.check_document(
+    file_path="corinne-berthier-recto-verso.pdf", 
+    document_type="french_ids", applicants_information=applicants_information,
+    with_image=True, reference="XX45678-BERTH-PARIS", save_report=True
+print(basylic_result)
+)
+```
+
+will act in the following way:
+
+1. Upload of `file_path` to service `french_ids` of Basylic, 
+2. Produce a JSON document `basylic_result` with OCR transciption and/or anti-fraud data (according to your permissions), 
+3. The `identity` extracted by Basylic's OCR will we crosschecked with `BERTHIER CORINNE`
+4. A base64 encoded image will be returned in the approriate key of `basylic_result`
+5. The reference `XX45678-BERTH-PARIS` will be included in `basylic_result` and `basylic_result` will be saved in your space in Basylic's Portal under this reference.
+ 
 
