@@ -34,11 +34,12 @@ basylic = Basylic(token=...)
 2. The minimal set of arguments to use the document checker are `document_type` and `file_path`:
 >>> basylic.check_document(file_path = "corinne-berthier-recto-verso.pdf", document_type="french_ids")
 
-The `file_path` argument is self-evident. Document type is a string that specifies which Basylic sub-service will be used.
+* The `file_path` argument is self-evident. 
+* `document_type` is a string that specifies which Basylic sub-service will be used.
 
 Possible values for `document_type` are: `'french_ids'`, `'rib'`, `'ri'`, `'avis-imposition'`...
 
-This will return a comprehensive JSON document with document compliance check and OCR transcription, among other information.
+With those arguments specified, `check_document` returns a comprehensive JSON document with document compliance check and OCR transcription, among other information.
 
 3. It is recommended to include data about applicants. Data extracted by Basylic's OCR will be crosschecked with those data.
 >>> applicant_information = {"applicant_0": {"name": "BERTHIER"}}
