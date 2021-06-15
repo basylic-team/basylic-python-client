@@ -32,8 +32,8 @@ basylic = Basylic(token=...)
 ```
 
 2. The minimal set of arguments to use the document checker are `document_type` and `file_path`:
->>> basylic.check_document(file_path = "corinne-berthier-recto-verso.pdf", document_type="french_ids")
-
+```basylic.check_document(file_path = "corinne-berthier-recto-verso.pdf", document_type="french_ids")
+```
 * The `file_path` argument is self-evident. 
 * `document_type` is a string that specifies which Basylic sub-service will be used.
 
@@ -74,5 +74,5 @@ will act in the following way:
 3. The `identity` extracted by Basylic's OCR will we crosschecked with `BERTHIER CORINNE`
 4. A base64 encoded image will be returned in the approriate key of `basylic_result`
 5. The reference `XX45678-BERTH-PARIS` will be included in `basylic_result` and `basylic_result` will be saved in your space in Basylic's Portal under this reference.
- 
+
 
