@@ -16,7 +16,7 @@ class Basylic:
         """
         self.token = token or os.getenv("BASYLIC_ACCESS_TOKEN")
     
-    def check_document(self, file_path, document_type, applicants_information={}, **kwargs):
+    def send_document(self, file_path, document_type, applicants_information={}, **kwargs):
         """Checks if document is fraudulent or genuine. 
         To call this method it is required:
         
@@ -24,7 +24,7 @@ class Basylic:
         >>> basylic = Basylic()
         
         2. The minimal set of arguments to use the document checker are `document_type` and `file_path`:
-        >>> basylic.check_document(file_path="corinne-berthier-recto-verso.pdf", document_type="french_ids")
+        >>> basylic.send_document(file_path="corinne-berthier-recto-verso.pdf", document_type="french_ids")
 
         The file_path argument is self-evident. Document type is a string that specifies which Basylic sub-service will be used.
 
@@ -34,7 +34,7 @@ class Basylic:
 
         3. It is recommended to include data about applicants. Data extracted by Basylic's OCR will be crosschecked with those data.
         >>> applicant_information = {"applicant_0": {"name": "BERTHIER"}}
-        >>> basylic.check_document(file_path = "corinne-berthier-recto-verso.odf", document_type="french_ids")
+        >>> basylic.send_document(file_path = "corinne-berthier-recto-verso.odf", document_type="french_ids")
 
         4. Various arguments could be passed as kwargs. For example:
         a. `save_report=True` will save the result of your request to your user space on Basylic's Portal.
