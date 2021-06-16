@@ -18,7 +18,6 @@ setup(
     packages=['basylic'],
     install_requires=['requests>=2.22.0',],
     keywords = ['insurance', 'anti-fraud', 'basylic'],
-    package_dir={'':'basylic'},
     classifiers=[
         'Intended Audience :: Financial and Insurance Industry',
         'License :: OSI Approved :: MIT License',  
