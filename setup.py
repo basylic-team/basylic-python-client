@@ -13,8 +13,7 @@ setup(
     install_requires=['requests>=2.22.0',],
     keywords = ['insurance', 'anti-fraud', 'basylic'], 
     classifiers=[
-        'Development Status :: Beta testing',
-        'Intended Audience :: Business',
+        'Intended Audience :: Financial and Insurance Industry',
         'License :: OSI Approved :: MIT License',  
         'Programming Language :: Python :: 3',
     ],
