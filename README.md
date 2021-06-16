@@ -3,7 +3,7 @@ Class to access Basylic API
 
 # Summary
 
-Developed by ETAONIS, Basylic is a SaaS solution performing document fraud detection with "state-of-the-art" performances. The solution is also used as a powerful tool to extract information from documents. This module provides a Python interface for accessing Basylic API.
+Developed by ETAONIS, Basylic is a SaaS solution performing document fraud detection with "state-of-the-art" performances. The solution is also used as a powerful tool to extract information from documents. This module provides a Python interface for accessing Basylic.
     
 # Installation
 
@@ -70,10 +70,10 @@ print(basylic_result)
 
 will act in the following way:
 
-1. Upload of document whose path is `file_path` to Basylic service `french_ids`, 
-2. Produce of a JSON document `basylic_result` with all relevant information, 
-3. Compare `identity` provided and identity extracted by Basylic OCR
+1. Upload of document whose path is `file_path` to Basylic service `french_ids`;
+2. Produce of a JSON document `basylic_result` with all relevant information;
+3. Compare `identity` provided and identity extracted by Basylic OCR;
 And:
-4. A base64 encoded image will be returned in the approriate key of `basylic_result`
-5. The reference `XX45678-BERTH-PARIS` will be included in `basylic_result` and used as reference in Basylic Portal
+4. A base64 encoded image will be returned in the approriate key of `basylic_result`;
+5. The reference `XX45678-BERTH-PARIS` will be included in `basylic_result` and used as reference in Basylic's Portal.
 
