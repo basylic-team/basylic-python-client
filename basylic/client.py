@@ -5,16 +5,25 @@ import json
 
 class Basylic:
     """Class to access Basylic's API."""
-    def __init__(self, token=None):
+    def __init__(self, username=None, password=None):
         """
-        # Initialize a connection to Basylic with token stored in environment variable BASYLIC_ACCESS_TOKEN
+        Initialize a connection to Basylic with credentials stored in 
+        environment variables BASYLIC_USER_KEY and BASYLIC_USER_PASSWORD
         >>> basylic = Basylic()
 
-        Otherwise, you can specify the token:
+        Otherwise, you can specify the credentials:
 
-        >>> basylic = Basylic(token="abcef...999")
+        >>> basylic = Basylic(username="user", password="...")
         """
-        self.token = token or os.getenv("BASYLIC_ACCESS_TOKEN")
+        self.token = self.obtain_token(username, password)
+    
+    def obtain_token(self, username, password):
+        """Returns the access token for given username, password"""
+        username = username or os.getenv("BASYLIC_USER_KEY")
+        password = password or os.getenv("BASYLIC_USER_PASSWORD")
+        url = "https://portal.basylic.fr/api/auth?get=token"
+        r = requests.get(url, auth=(username, password))
+        return r.json()
     
     def send_document(self, file_path, document_type, applicants_information={}, **kwargs):
         """Checks if document is fraudulent or genuine. 
