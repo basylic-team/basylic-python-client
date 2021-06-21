@@ -17,18 +17,18 @@ Alternatively, you can access the module source code on GitHub:
 
 # Basic usage
 
-To access the API, a token must be provided. We recommend you to store this token as an environment variable called `BASYLIC_ACCESS_TOKEN` and then import the module. 
+To access the API, credentials must be provided. We recommend you to store those credentials in environment variables called `BASYLIC_USER_KEY` and `BASYLIC_USER_PASSWORD`. 
 
 ```
 from basylic import Basylic
 basylic = Basylic()
 ```
 
-Alternatively, if your token is stored in a non-standard location, you can specify it with argument `token` during class instantiation:
+Alternatively, if your credentials are stored in a non-standard location, you can specify them with arguments `username` and `password` during class instantiation:
 
 ```
 from basylic import Basylic
-basylic = Basylic(token=...)
+basylic = Basylic(username=..., password=...)
 ```
 
 2. Two arguments are mandatory: `file_path` and `document_type`:
@@ -69,9 +69,9 @@ print(basylic_result)
 
 will act in the following way:
 
-1. Upload of document whose path is `file_path` to Basylic service `french_ids`;
-2. Produce of a JSON document `basylic_result` with all relevant information;
-3. Compare `identity` provided and identity extracted by Basylic OCR;
-5. A base64 encoded image will be returned in the approriate key of `7basylic_result`;
+1. Uploads of document whose path is `file_path` to Basylic service `french_ids`;
+2. Produces of a JSON document `basylic_result` with all relevant information;
+3. Compares `identity` provided and identity extracted by Basylic OCR;
+5. A base64 encoded image will be returned in the approriate key of `basylic_result`;
 6. The reference `XX45678-BERTH-PARIS` will be included in `basylic_result` and used as reference in Basylic's Portal.
 
