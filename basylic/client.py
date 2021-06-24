@@ -74,5 +74,10 @@ class Basylic:
 
         with requests.Session() as api:
             r = api.post(**payload)
+        try:
             r.raise_for_status()
+        except requests.HTTPError:
+            print("Basylic returned error message : ")
+            print(r.content.decode("utf-8"))
+            raise
         return r.json()
