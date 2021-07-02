@@ -6,10 +6,10 @@ with open("README.md", "r") as fh:
 
 setup(
     name='basylic',
-    version='0.12.7',    
+    version='0.2',    
     description="Python interface to Basylic's API",
     url='https://github.com/basylic-team/basylic-python-client',
-    download_url = 'https://github.com/basylic-team/basylic-python-client/tarball/0.12.7',
+    download_url = 'https://github.com/basylic-team/basylic-python-client/tarball/0.2',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Petar Todorov',

@@ -7,22 +7,25 @@ class Basylic:
     """Class to access Basylic's API."""
     def __init__(self, username=None, password=None):
         """
-        Initialize a connection to Basylic with credentials stored in 
-        environment variables BASYLIC_USER_KEY and BASYLIC_USER_PASSWORD
+        Instantiates the class Basylic which allows to access the Basylic API
+        with given refresh token. To obtain your refresh token, visit 
+        https://portal.basylic.fr/user. 
+        
+        Then, put the value of your refresh token in environment variable BASYLIC_REFRESH_TOKEN:
         >>> basylic = Basylic()
 
-        Otherwise, you can specify the credentials:
+        Otherwise, you can specify it manually:
 
-        >>> basylic = Basylic(username="user", password="...")
+        >>> basylic = Basylic(refresh_token="...")
         """
         self.token = self.obtain_token(username, password)
     
-    def obtain_token(self, username, password):
-        """Returns the access token for given username, password"""
-        username = username or os.getenv("BASYLIC_USER_KEY")
-        password = password or os.getenv("BASYLIC_USER_PASSWORD")
-        url = "https://portal.basylic.fr/api/auth?get=token"
-        r = requests.get(url, auth=(username, password))
+    def obtain_access_token(self, refresh_token):
+        """Returns the access token for given refresh token"""
+        refresh_token = refresh_token or os.getenv("BASYLIC_REFRESH_TOKEN")
+        url = "https://portal.basylic.fr/api/auth"
+        data = {"refresh_token": refresh_token, "get": "token"}
+        r = requests.post(url, data=data)
         return r.json()
     
     def send_document(self, file_path, document_type, applicants_information={}, **kwargs):
