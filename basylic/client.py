@@ -5,7 +5,7 @@ import json
 
 class Basylic:
     """Class to access Basylic's API."""
-    def __init__(self, username=None, password=None):
+    def __init__(self, refresh_token=None):
         """
         Instantiates the class Basylic which allows to access the Basylic API
         with given refresh token. To obtain your refresh token, visit 
@@ -18,7 +18,7 @@ class Basylic:
 
         >>> basylic = Basylic(refresh_token="...")
         """
-        self.token = self.obtain_token(username, password)
+        self.token = self.obtain_access_token(refresh_token)
     
     def obtain_access_token(self, refresh_token):
         """Returns the access token for given refresh token"""
