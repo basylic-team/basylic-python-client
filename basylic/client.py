@@ -28,21 +28,28 @@ class Basylic:
         r = requests.post(url, data=data)
         return r.json()
     
-    def send_document(self, file_path, document_type, applicants_information={}, **kwargs):
+    def send_document(self, file_path=None, document_type=None, applicants_information={}, file_obj=None, **kwargs):
         """Checks if document is fraudulent or genuine. 
         To call this method it is required:
         
         1. To put your access token in the environment variable BASYLIC_ACCESS_TOKEN and then to instantiate the class Basylic as follows:
         >>> basylic = Basylic()
         
-        2. The minimal set of arguments to use the document checker are `document_type` and `file_path`:
+        2a. One minimal set of arguments to use the document checker are `document_type` and `file_path`:
         >>> basylic.send_document(file_path="corinne-berthier-recto-verso.pdf", document_type="french_ids")
 
-        The file_path argument is self-evident. Document type is a string that specifies which Basylic sub-service will be used.
+        The file_path argument is a string that contains the path to the file to be sent to Basylic.
+        
+        2b. The other minimal set of arguments to use the document checker are `document_type` and `file_obj`:
+        >>> basylic.send_document(file_obj=file, document_type="french_ids")
 
-        Possible values for `document_type` are: 'french_ids', 'rib', 'ri', 'avis-imposition'...
+        Where `file_obj` is a Multipart-encoded file (such as Django `InMemoryUploadedFile`) to be sent to Basylic.
+
+        Document type is a string that specifies which Basylic sub-service will be used. Possible values for `document_type` are: 'french_ids', 'rib', 'ri', 'avis-imposition'...
         
         This will return a comprehensive JSON document with document compliance check and OCR transcription, among other information.
+
+        If `file_obj` and `file_path` are both specified, `file_obj` will be sent to Basylic.
 
         3. It is recommended to include data about applicants. Data extracted by Basylic's OCR will be crosschecked with those data.
         >>> applicant_information = {"applicant_0": {"name": "BERTHIER"}}
@@ -54,9 +61,24 @@ class Basylic:
         c. `reference='abc...'` will add this key-value pair to the API output. If this key is specified, the report will appear under this name in Basylic's Portal. 
         """
         url = kwargs.get("url") or "https://api.basylic.io"
-        filename = os.path.basename(file_path)
-        buffer = open(file_path, "rb")
 
+        if not document_type:
+            return {"error": "The `document_type` argument is required. Possible values are `french_ids`, `rib`, `ri`, among others (please refer to list of services in Basylic Portal.)"}
+        
+        if file_obj:
+            buffer = file_obj.file
+            if hasattr(file_obj, "name"):
+                filename = file_obj.name
+            elif hasattr(file_obj, "filename"):
+                filename = file_obj.filename
+            else:
+                filename = "untitled"
+        else:
+            if not file_path:
+                return {"error": "Either `file_obj` or `file_path` should be specified"}
+            buffer = open(file_path, "rb")
+            filename = os.path.basename(file_path)
+        
         files = {"file": ("uploaded_file", buffer)}
 
         data = {
