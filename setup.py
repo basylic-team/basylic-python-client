@@ -6,17 +6,17 @@ with open("README.md", "r") as fh:
 
 setup(
     name='basylic',
-    version='0.20.6',    
+    version='0.20.7',    
     description="Python interface to Basylic's API",
     url='https://github.com/basylic-team/basylic-python-client',
-    download_url = 'https://github.com/basylic-team/basylic-python-client/tarball/0.20.6',
+    download_url = 'https://github.com/basylic-team/basylic-python-client/tarball/0.20.7',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Petar Todorov',
     author_email='ptodorov@etaonis.com',
     license='MIT',
     packages=['basylic'],
-    install_requires=['requests>=2.22.0',],
+    install_requires=['requests>=2.22.0', 'asyncio>=3.4.3'],
     keywords = ['insurance', 'anti-fraud', 'basylic'],
     classifiers=[
         'Intended Audience :: Financial and Insurance Industry',

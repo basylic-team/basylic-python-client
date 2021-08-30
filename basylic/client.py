@@ -1,6 +1,9 @@
 import os
-import requests
 import json
+import asyncio
+import functools
+
+import requests
 
 
 class Basylic:
@@ -106,3 +109,10 @@ class Basylic:
             print(r.content.decode("utf-8"))
             raise
         return r.json()
+        
+    def fire_document(self, **kwargs):
+        """Wrapper around `send_document` to execute the function in background 
+        and not wait for response"""
+        kwargs["save_report"] = True
+        loop = asyncio.get_event_loop()
+        return loop.run_in_executor(None, functools.partial(self.send_document, **kwargs))
