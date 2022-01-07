@@ -1,2 +1,2 @@
-__version__ = "0.20.7"
+__version__ = "0.21.1"
 from .client import Basylic
