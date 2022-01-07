@@ -17,7 +17,7 @@ Alternatively, you can access the module source code on GitHub:
 
 # Basic usage
 
-To access the API, credentials must be provided. We recommend you to store those credentials in environment variables called `BASYLIC_USER_KEY` and `BASYLIC_USER_PASSWORD`. 
+To access the API, refresh and access tokens should be provided. You can access your Refresh token via the Portal interface. Then, we recommend you to store its value in environment variable `BASYLIC_REFRESH_TOKEN`. 
 
 ```
 from basylic import Basylic
@@ -28,10 +28,10 @@ Alternatively, if your credentials are stored in a non-standard location, you ca
 
 ```
 from basylic import Basylic
-basylic = Basylic(username=..., password=...)
+basylic = Basylic(refresh_token=...)
 ```
 
-2. Two arguments are mandatory: `file_path` and `document_type`:
+2. At least two arguments should be set: one of `file_path`, `file_obj` or `ftp_file`, and `document_type`:
 ```
 basylic.send_document(file_path = "corinne-berthier-recto-verso.pdf", document_type="french_ids")
 ```
