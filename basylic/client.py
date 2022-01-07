@@ -64,7 +64,8 @@ class Basylic:
         c. `reference='abc...'` will add this key-value pair to the API output. If this key is specified, the report will appear under this name in Basylic's Portal. 
         """
         url = kwargs.get("url") or "https://api.basylic.io"
-
+        ftp_file = kwargs.get("ftp_file")
+        
         if not document_type:
             return {"error": "The `document_type` argument is required. Possible values are `french_ids`, `rib`, `ri`, among others (please refer to list of services in Basylic Portal.)"}
         
@@ -76,14 +77,17 @@ class Basylic:
                 filename = file_obj.filename
             else:
                 filename = "untitled"
-        else:
-            if not file_path:
-                return {"error": "Either `file_obj` or `file_path` should be specified"}
+            files = {"file": ("uploaded_file", buffer)}
+        elif ftp_file:
+            filename = os.path.basename(ftp_file)
+            files = {"file": ("uploaded_file", bytes())}
+        elif file_path:
             buffer = open(file_path, "rb")
             filename = os.path.basename(file_path)
-        
-        files = {"file": ("uploaded_file", buffer)}
-
+            files = {"file": ("uploaded_file", buffer)}
+        else:
+            return {"error": "Either `file_obj` or `file_path` should be specified"}
+            
         data = {
             "api": document_type,
             "with_image": True,
