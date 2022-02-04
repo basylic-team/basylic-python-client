@@ -24,7 +24,7 @@ from basylic import Basylic
 basylic = Basylic()
 ```
 
-Alternatively, if your credentials are stored in a non-standard location, you can specify them with arguments `username` and `password` during class instantiation:
+Alternatively, if your refresh token is stored in a non-standard location, you can specify it as an argument during class instantiation:
 
 ```
 from basylic import Basylic
@@ -54,7 +54,6 @@ print(basylic_result)
 4. And various arguments could be passed as kwargs. For example:
 * a. `save_report=True` will save the result of your request in your user space on Basylic Portal;
 * b. `with_image=True` will return a base64 image for each recognised document;
-* c. `reference='abc...'` will add a key-value pair to the API output. If this key is specified, the report will appear under this reference in Basylic Portal.
 
 For example, this code: 
 
@@ -63,7 +62,7 @@ applicants_information = {"applicant_0": {"identity": "BERTHIER CORINNE"}}
 basylic_result = basylic.send_document(
     file_path="corinne-berthier-recto-verso.pdf", 
     document_type="french_ids", applicants_information=applicants_information,
-    with_image=True, reference="XX45678-BERTH-PARIS", save_report=True)
+    with_image=True, save_report=True)
 print(basylic_result)
 ```
 
@@ -72,6 +71,4 @@ will act in the following way:
 1. Uploads of document whose path is `file_path` to Basylic service `french_ids`;
 2. Produces of a JSON document `basylic_result` with all relevant information;
 3. Compares `identity` provided and identity extracted by Basylic OCR;
-5. A base64 encoded image will be returned in the approriate key of `basylic_result`;
-6. The reference `XX45678-BERTH-PARIS` will be included in `basylic_result` and used as reference in Basylic's Portal.
-
+5. A base64 encoded image will be returned in the approriate key of `basylic_result`.
