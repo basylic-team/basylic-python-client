@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='basylic',
-    version='0.21.1',    
+    version='0.21.1',
     description="Python interface to Basylic's API",
     url='https://github.com/basylic-team/basylic-python-client',
     download_url = 'https://github.com/basylic-team/basylic-python-client/tarball/0.21.1',
@@ -20,7 +20,7 @@ setup(
     keywords = ['insurance', 'anti-fraud', 'basylic'],
     classifiers=[
         'Intended Audience :: Financial and Insurance Industry',
-        'License :: OSI Approved :: MIT License',  
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
     ],
 )
