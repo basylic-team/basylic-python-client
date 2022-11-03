@@ -118,5 +118,6 @@ class Basylic:
         """Wrapper around `send_document` to execute the function in background
         and not wait for response"""
         kwargs["save_report"] = True
-        loop = asyncio.get_event_loop()
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
         return loop.run_in_executor(None, functools.partial(self.send_document, **kwargs))
