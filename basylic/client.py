@@ -104,8 +104,8 @@ class Basylic:
             files=files
         )
 
-        with requests.Session() as api:
-            r = api.post(**payload)
+        with requests.Session() as session:
+            r = session.post(**payload)
         try:
             r.raise_for_status()
         except requests.HTTPError:
