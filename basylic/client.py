@@ -2,12 +2,12 @@ import os
 import json
 import asyncio
 import functools
-
 import requests
 
 
 class Basylic:
-    """Class to access Basylic's API."""
+    """Class to access Basylic's API"""
+
     def __init__(self, refresh_token=None):
         """
         Instantiates the class Basylic which allows to access the Basylic API
@@ -31,7 +31,14 @@ class Basylic:
         r = requests.post(url, data=data)
         return r.json()
 
-    def send_document(self, file_path=None, document_type=None, applicants_information={}, file_obj=None, **kwargs):
+    def send_document(
+        self,
+        file_path=None,
+        document_type=None,
+        applicants_information={},
+        file_obj=None,
+        **kwargs,
+    ):
         """Checks if document is fraudulent or genuine.
         To call this method it is required:
 
@@ -67,7 +74,9 @@ class Basylic:
         ftp_file = kwargs.get("ftp_file")
 
         if not document_type:
-            return {"error": "The `document_type` argument is required. Possible values are `french_ids`, `rib`, `ri`, among others (please refer to list of services in Basylic Portal.)"}
+            return {
+                "error": "`document_type` argument is required. Possible values are `french_ids`, `bank-identity-statement`, `driver-record`, among others (please refer to list of services on Basylic Portal)"
+            }
 
         if file_obj:
             buffer = file_obj.file
@@ -93,7 +102,7 @@ class Basylic:
             "with_image": True,
             "crosschecking": True,
             "applicants_information": applicants_information,
-            "document_basename": filename
+            "document_basename": filename,
         }
         data.update(kwargs)
 
@@ -101,23 +110,24 @@ class Basylic:
             url=url,
             headers={"TOKEN": self.token},
             data={"data": json.dumps(data)},
-            files=files
+            files=files,
         )
 
         with requests.Session() as session:
-            r = session.post(**payload)
+            response = session.post(**payload, timeout=300)  # 5 min
         try:
-            r.raise_for_status()
+            response.raise_for_status()
         except requests.HTTPError:
-            print("Basylic returned error message : ")
-            print(r.content.decode("utf-8"))
+            print("Basylic returned error message: ")
+            print(response.content.decode("utf-8"))
             raise
-        return r.json()
+        return response.json()
 
     def fire_document(self, **kwargs):
-        """Wrapper around `send_document` to execute the function in background
-        and not wait for response"""
+        """Wrapper around `send_document` to execute the function in background and not wait for response"""
         kwargs["save_report"] = True
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        return loop.run_in_executor(None, functools.partial(self.send_document, **kwargs))
+        return loop.run_in_executor(
+            None, functools.partial(self.send_document, **kwargs)
+        )
